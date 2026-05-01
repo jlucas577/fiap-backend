@@ -244,7 +244,7 @@ flowchart TD
 |---|---|---|---|
 | Primeiro envio | não existe | novo | Cria `PENDING`, tenta assinatura |
 | Retry — PENDING ainda ativo | `PENDING_SUBSCRIPTION` | mesmo | Retenta apenas a assinatura |
-| Retry — outro usuário, mesmo email | `PENDING` ou `ACTIVE` | diferente | Erro 409 — email já existe |
+| Retry — outro usuário, mesmo email | `PENDING` ou `ACTIVE` | diferente | Erro 409 — E-mail já cadastrado |
 | Retry após compensação | `CANCELLED` | mesmo | Deleta `CANCELLED`, recria do zero |
 | Cadastro simples, retry | `COMPLETED` | mesmo | Retorna resultado cacheado |
 
