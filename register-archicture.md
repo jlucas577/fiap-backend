@@ -39,7 +39,7 @@ graph TD
 
 **Problemas:**
 - Muitos times editando a mesma base de código → conflitos e lentidão
-- Contenção de recursos: pool de threads, memória, CPU e conexões são compartilhados entre os 50+ serviços
+- Contenção de recursos: pool de threads, memória, CPU e conexões são compartilhados entre os +50 serviços
 - Um serviço lento derruba os demais → indisponibilidades em cascata
 - O cadastro depende sincronamente do Oracle do monólito
 
@@ -175,7 +175,7 @@ sequenceDiagram
     FE-->>U: "Algo deu errado. Tente novamente."
 ```
 
-> **Nota:** O usuário recebe um erro claro e pode tentar novamente com o mesmo email sem receber "email já existe".
+> **Nota:** O usuário recebe um erro claro e pode tentar novamente com o mesmo endereço de email, sem receber a mensagem: "E-mail já cadastrado".
 
 ---
 
@@ -188,10 +188,18 @@ Este é o ponto mais crítico do exercício. A solução combina dois mecanismos
 O frontend gera um UUID ao **carregar o formulário**. Esse UUID é enviado em todo request. O Orchestrator mantém uma tabela:
 
 ```sql
+CREATE TYPE signup_attempt_status AS ENUM (
+    'PROCESSING',
+    'COMPLETED',
+    'FAILED'
+);
+```
+
+```sql
 CREATE TABLE signup_attempts (
     attempt_id    UUID PRIMARY KEY,
     email         VARCHAR NOT NULL,
-    status        VARCHAR NOT NULL, -- PROCESSING, COMPLETED, FAILED
+    status        signup_attempt_status NOT NULL,
     user_id       UUID,
     created_at    TIMESTAMP DEFAULT NOW(),
     updated_at    TIMESTAMP DEFAULT NOW()
