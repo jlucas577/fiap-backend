@@ -13,7 +13,7 @@ A solução foca em:
 
 ## Documentação
 
-- [Arquitetura da Solução](./register-archicture.md)
+- [Arquitetura da Solução](./register-architecture.md)
 - [Fluxo Saga de Cadastro](./saga-register.md)
 
 ## Principais Conceitos
