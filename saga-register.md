@@ -346,10 +346,18 @@ O frontend gera um UUID ao **carregar o formulário** (não ao submeter). Esse U
 ### Mecanismo 2 — Tabela `signup_attempts` no Orchestrator
 
 ```sql
+CREATE TYPE signup_attempt_status AS ENUM (
+    'PROCESSING',
+    'COMPLETED',
+    'FAILED'
+);
+```
+
+```sql
 CREATE TABLE signup_attempts (
     attempt_id       UUID PRIMARY KEY,
     email            VARCHAR      NOT NULL,
-    status           VARCHAR      NOT NULL,  -- PROCESSING | COMPLETED | FAILED
+    status           signup_attempt_status NOT NULL,
     user_id          UUID,                   -- preenchido após T1
     subscription_id  UUID,                   -- preenchido após T2
     created_at       TIMESTAMP    DEFAULT NOW(),
