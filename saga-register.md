@@ -26,7 +26,7 @@
 O problema exige coordenar **duas operações em serviços distintos** — criar usuário e criar assinatura — como se fossem uma única transação lógica:
 
 - Se o usuário for criado mas a assinatura falhar → o usuário não pode ficar "preso" em estado inconsistente
-- Se o usuário tentar novamente com o mesmo email → não pode receber erro de "email já existe"
+- Se o usuário tentar novamente com o mesmo email → não pode receber erro de "E-mail já cadastrado"
 - A confirmação deve ser **síncrona** (requisito do PO) — não é possível usar filas assíncronas
 
 Uma transação distribuída clássica (2PC — Two-Phase Commit) resolveria a atomicidade, mas introduz acoplamento forte entre serviços, bloqueios de longa duração e é inviável quando os serviços têm bancos de dados diferentes.
@@ -397,7 +397,7 @@ flowchart TD
 | `FAILED` + usuário não existe | Mesmo | Livre | Executa Saga do zero |
 | `FAILED` + usuário `CANCELLED` | Mesmo | Existente | Deleta `CANCELLED`, executa Saga do zero |
 | `FAILED` + usuário `PENDING` | Mesmo | Existente | Retenta apenas T2 (assinatura) |
-| `FAILED` + usuário `ACTIVE` | Diferente | Existente | Erro 409 — email já cadastrado |
+| `FAILED` + usuário `ACTIVE` | Diferente | Existente | Erro 409 — E-mail já cadastrado |
 | `PROCESSING` | Mesmo | — | 409 "Em processamento" (evita dupla execução) |
 
 ---
@@ -455,10 +455,10 @@ Response 200 — sucesso:
   "subscription_id": "9c4d5f2b-..."  // presente apenas se produto foi selecionado
 }
 
-Response 409 — email já cadastrado:
+Response 409 — E-mail já cadastrado:
 {
   "error": "EMAIL_ALREADY_EXISTS",
-  "message": "Este email já está em uso."
+  "message": "Este e-mail já está em uso."
 }
 
 Response 4xx — falha na Saga (retry possível):
