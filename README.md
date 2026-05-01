@@ -15,6 +15,7 @@ A solução foca em:
 
 - [Arquitetura da Solução](./register-architecture.md)
 - [Fluxo Saga de Cadastro](./saga-register.md)
+- [Visão Geral da Solução Final](./final-solution-overview.md)
 
 ## Principais Conceitos
 
