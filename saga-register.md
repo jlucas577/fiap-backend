@@ -456,19 +456,25 @@ Request:
   "attempt_id":      "550e8400-e29b-41d4-a716-446655440000",  // UUID gerado pelo frontend
   "produto":         "PLANO_BASICO"  // opcional — se presente, cria assinatura
 }
+```
 
+```
 Response 200 — sucesso:
 {
   "user_id":         "7f3b2e1a-...",
   "subscription_id": "9c4d5f2b-..."  // presente apenas se produto foi selecionado
 }
+```
 
-Response 409 — E-mail já cadastrado:
+```
+Response 409 — e-mail já cadastrado:
 {
   "error": "EMAIL_ALREADY_EXISTS",
   "message": "Este e-mail já está em uso."
 }
+```
 
+```
 Response 4xx — falha na Saga (retry possível):
 {
   "error": "SAGA_FAILED",
