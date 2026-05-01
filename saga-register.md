@@ -113,15 +113,15 @@ O status do usuário no User Service é o coração da solução. Ele reflete o 
 
 ```mermaid
 stateDiagram-v2
-    [*] --> PENDING_SUBSCRIPTION : T1 — POST /users\n(cadastro com assinatura)
-    [*] --> ACTIVE : POST /users\n(cadastro simples, sem assinatura)
+    [*] --> PENDING_SUBSCRIPTION : T1 — POST /users<br/>(cadastro com assinatura)
+    [*] --> ACTIVE : POST /users<br/>(cadastro simples, sem assinatura)
 
-    PENDING_SUBSCRIPTION --> ACTIVE : T2 OK + PATCH status\n(Saga completada)
-    PENDING_SUBSCRIPTION --> CANCELLED : Compensação C1\n(T2 falhou)
+    PENDING_SUBSCRIPTION --> ACTIVE : T2 OK + PATCH status<br/>(Saga completada)
+    PENDING_SUBSCRIPTION --> CANCELLED : Compensação C1<br/>(T2 falhou)
 
-    CANCELLED --> [*] : Registro pode ser\nreutilizado no retry
+    CANCELLED --> [*] : Registro pode ser<br/>reutilizado no retry
 
-    ACTIVE --> [*] : Usuário ativo\nponto de não retorno
+    ACTIVE --> [*] : Usuário ativo<br/>ponto de não retorno
 
     note right of PENDING_SUBSCRIPTION
         Janela de inconsistência visível
